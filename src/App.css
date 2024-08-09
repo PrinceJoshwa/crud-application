@@ -1,0 +1,140 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+
+*{
+  font-family: "Intern", sans-serif;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  max-width:600px;
+  margin: 20px auto;
+}
+
+h3{
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 20px;
+  text-align: center;
+  padding: 10px;
+  border-bottom: 1px dased #ccc;
+  color: darkslategrey;
+}
+.btn{
+  color: white;
+  padding: 8px 10px;
+  border:none;
+  border-radius: 4px;
+  cursor: pointer;
+  background-color: #ccc;
+}
+
+.blue{
+  /* background-color: rgb(22, 162, 226); */
+  background-color: #007BFF;
+}
+
+.blue:hover{
+  background-color: rgb(32, 111, 148);
+}
+.red{
+  background-color: rgb(255, 35, 35);
+}
+.red:hover{
+  background-color: rgb(197, 67, 27);
+}
+
+.input-search{
+display:flex;
+justify-content: space-between;
+align-items: center;
+margin-bottom: 20px;
+}
+
+.input-search input{
+width: 300px;
+padding: 8px;
+border-radius:4px;
+border: 1px solid #ccc;
+outline: none;
+}
+
+.table{
+  width: 100%;
+  border-collapse: collapse;
+  cursor: pointer;
+}
+
+.table th,
+.table td {
+  border: 1px solid #ddd;
+  padding:8px;
+}
+
+.table th{
+  background-color: #f2f2f2;
+}
+
+.table tr:nth-child(even) {
+  background-color: #f2f2f2;
+} 
+
+.table tr:hover {
+  background-color: #ddd;
+}
+
+.modal{
+  display:block;
+  position: fixed;
+  z-index: 1;
+  left:0;
+  top:0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.5);
+  overflow: auto;
+}
+
+.modal-content {
+  background-color: #fefefe;
+  margin: 10% auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%;
+}
+
+.close {
+  color: #aaaaaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: #000;
+  cursor: pointer;
+}
+
+.modal h2 {
+  font-weight: 500;
+  margin-bottom: 20px;
+
+}
+.input-group {
+  margin-bottom: 10px;
+}
+
+.input-group label{
+  display: block;
+  margin-bottom: 5px;
+}
+
+.input-group input {
+  width: 100%;
+  padding: 8px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  outline: none;
+}
