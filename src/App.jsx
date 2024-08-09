@@ -11,6 +11,7 @@ function App() {
   const getAllUsers = async () => {
     try {
       const res = await axios.get(`${process.env.REACT_APP_API_URL}/users`);
+      console.log("process.env.REACT_APP_API_URL")
       setUsers(res.data);
       setFilterusers(res.data);
     } catch (error) {
