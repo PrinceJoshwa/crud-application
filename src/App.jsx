@@ -11,11 +11,11 @@ function App() {
   const getAllUsers = async () => {
     try {
       const res = await axios.get(`${process.env.REACT_APP_API_URL}/users`);
-      console.log("process.env.REACT_APP_API_URL")
+      console.log("Fetched users:", res.data);
       setUsers(res.data);
       setFilterusers(res.data);
     } catch (error) {
-      console.error("Error fetching users:", error);
+      console.error("Error fetching users:", error.response ? error.response.data : error.message);
     }
   };
 
@@ -35,12 +35,16 @@ function App() {
 
   // Delete Function
   const handleDelete = async (id) => {
-    const isConfirmed = window.confirm("Are You Sure you want to Delete this User?");
+    const isConfirmed = window.confirm("Are you sure you want to delete this user?");
     if (isConfirmed) {
-      await axios.delete(`${process.env.REACT_APP_API_URL}/users/${id}`).then((res) => {
+      try {
+        const res = await axios.delete(`${process.env.REACT_APP_API_URL}/users/${id}`);
+        console.log("Delete response:", res.data);
         setUsers(res.data);
         setFilterusers(res.data);
-      });
+      } catch (error) {
+        console.error("Error deleting user:", error.response ? error.response.data : error.message);
+      }
     }
   };
 
@@ -64,17 +68,17 @@ function App() {
   // Handle Submit
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (userData.id) {
-      await axios.patch(`${process.env.REACT_APP_API_URL}/users/${userData.id}`, userData).then((res) => {
-        console.log(res);
-      });
-    } else {
-      await axios.post(`${process.env.REACT_APP_API_URL}/users`, userData).then((res) => {
-        console.log(res);
-      });
+    try {
+      if (userData.id) {
+        await axios.patch(`${process.env.REACT_APP_API_URL}/users/${userData.id}`, userData);
+      } else {
+        await axios.post(`${process.env.REACT_APP_API_URL}/users`, userData);
+      }
+      closeModal();
+      setUserData({ name: "", age: "", profession: "" });
+    } catch (error) {
+      console.error("Error submitting data:", error.response ? error.response.data : error.message);
     }
-    closeModal();
-    setUserData({ name: "", age: "", profession: "" });
   };
 
   // Update User Function
