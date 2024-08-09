@@ -6,11 +6,11 @@ function App() {
   const [users, setUsers] = useState([]);
   const [filterusers, setFilterusers] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [userData, setUserData] = useState ({name: "", age: "", profession: ""});
+  const [userData, setUserData] = useState({ name: "", age: "", profession: "" });
 
   const getAllUsers = async () => {
     try {
-      const res = await axios.get("http://localhost:8000/users");
+      const res = await axios.get(`${process.env.REACT_APP_API_URL}/users`);
       setUsers(res.data);
       setFilterusers(res.data);
     } catch (error) {
@@ -22,64 +22,66 @@ function App() {
     getAllUsers();
   }, []);
 
-  //Search Function
+  // Search Function
   const handleSearchChange = (e) => {
     const searchText = e.target.value.toLowerCase();
-    const filteredUsers = users.filter((user)=>user.name.
-    toLowerCase().includes(searchText) || user.profession.
-    toLowerCase().includes(searchText));
+    const filteredUsers = users.filter((user) =>
+      user.name.toLowerCase().includes(searchText) ||
+      user.profession.toLowerCase().includes(searchText)
+    );
     setFilterusers(filteredUsers);
   };
-  
-  //Delete Function
+
+  // Delete Function
   const handleDelete = async (id) => {
-    const isConfirmed = window.confirm("Are You Sure you want to Delete this User?")
-    if(isConfirmed) {
-    await axios.delete(`http://localhost:8000/users/${id}`).then((res) => {
-      setUsers(res.data);
-      setFilterusers(res.data);
-    });
-  }
+    const isConfirmed = window.confirm("Are You Sure you want to Delete this User?");
+    if (isConfirmed) {
+      await axios.delete(`${process.env.REACT_APP_API_URL}/users/${id}`).then((res) => {
+        setUsers(res.data);
+        setFilterusers(res.data);
+      });
+    }
   };
-  
-  //Close Modal
+
+  // Close Modal
   const closeModal = () => {
     setIsModalOpen(false);
     getAllUsers();
   };
 
-  //Add User
+  // Add User
   const handleAddRecord = () => {
-    setUserData({name: "", age: "", profession: ""});
+    setUserData({ name: "", age: "", profession: "" });
     setIsModalOpen(true);
   };
 
-  //handledate
+  // Handle Data
   const handleData = (e) => {
-  setUserData({...userData,[e.target.name]: e.target.value});
+    setUserData({ ...userData, [e.target.name]: e.target.value });
   };
 
-  //handle Submit
+  // Handle Submit
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (userData.id) {
-      await axios.patch(`http://localhost:8000/users/${userData.id}`, userData).then((res) => {
+      await axios.patch(`${process.env.REACT_APP_API_URL}/users/${userData.id}`, userData).then((res) => {
         console.log(res);
       });
     } else {
-    await axios.post("http://localhost:8000/users", userData).then((res) => {
-      console.log(res);
-    });
-  }
-  closeModal();
-  setUserData({name: "", age: "", profession: ""});
+      await axios.post(`${process.env.REACT_APP_API_URL}/users`, userData).then((res) => {
+        console.log(res);
+      });
+    }
+    closeModal();
+    setUserData({ name: "", age: "", profession: "" });
   };
 
-  //Update User Function
+  // Update User Function
   const handleUpdateRecord = (user) => {
-   setUserData(user);
-   setIsModalOpen(true);
+    setUserData(user);
+    setIsModalOpen(true);
   };
+
   return (
     <>
       <div className="container">
@@ -94,26 +96,26 @@ function App() {
               <th>Id</th>
               <th>Name</th>
               <th>Age</th>
-              <th>profession</th>
+              <th>Profession</th>
               <th>Edit</th>
               <th>Delete</th>
             </tr>
           </thead>
           <tbody>
-            {filterusers && 
-             filterusers.map((user, index) => (
-              <tr key={user.id}>
-              <td>{index + 1}</td>
-              <td>{user.name}</td>
-              <td>{user.age}</td>
-              <td>{user.profession}</td>
-              <td>
-                <button className="btn blue" onClick={()=>handleUpdateRecord(user)}>Edit</button>
-              </td>
-              <td>
-                <button onClick={() => handleDelete(user.id)} className="btn red">Delete</button>
-              </td>
-              </tr>
+            {filterusers &&
+              filterusers.map((user, index) => (
+                <tr key={user.id}>
+                  <td>{index + 1}</td>
+                  <td>{user.name}</td>
+                  <td>{user.age}</td>
+                  <td>{user.profession}</td>
+                  <td>
+                    <button className="btn blue" onClick={() => handleUpdateRecord(user)}>Edit</button>
+                  </td>
+                  <td>
+                    <button onClick={() => handleDelete(user.id)} className="btn red">Delete</button>
+                  </td>
+                </tr>
               ))}
           </tbody>
         </table>
@@ -121,22 +123,20 @@ function App() {
           <div className="modal">
             <div className="modal-content">
               <span className="close" onClick={closeModal}>&times;</span>
-              <h2>
-                {userData.id ? "Update Record" : "Add Record"}
-              </h2>
+              <h2>{userData.id ? "Update Record" : "Add Record"}</h2>
               <div className="input-group">
                 <label htmlFor="name">Full Name</label>
-                <input type="text" value={userData.name} name="name" id="name" onChange={handleData}/>
-              </div>              
+                <input type="text" value={userData.name} name="name" id="name" onChange={handleData} />
+              </div>
               <div className="input-group">
                 <label htmlFor="age">Age</label>
-                <input type="number" value={userData.age} name="age" id="age" onChange={handleData}/>
+                <input type="number" value={userData.age} name="age" id="age" onChange={handleData} />
               </div>
               <div className="input-group">
-                <label htmlFor="profession">profession</label>
-                <input type="text" value={userData.profession} name="profession" id="profession" onChange={handleData}/>
+                <label htmlFor="profession">Profession</label>
+                <input type="text" value={userData.profession} name="profession" id="profession" onChange={handleData} />
               </div>
-              <button className="btn blue" onClick={handleSubmit}> {userData.id ? "Update User" : "Add User"}</button>
+              <button className="btn blue" onClick={handleSubmit}>{userData.id ? "Update User" : "Add User"}</button>
             </div>
           </div>
         )}
