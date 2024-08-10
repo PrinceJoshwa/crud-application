@@ -10,7 +10,8 @@ function App() {
 
   const getAllUsers = async () => {
     try {
-      const res = await axios.get(`${process.env.REACT_APP_API_URL}/users`);
+      console.log("before api call")
+      const res = await axios.get(`https://crud-application-backend-five.vercel.app/users`);
       console.log("Fetched users:", res.data);
       setUsers(res.data);
       setFilterusers(res.data);
@@ -56,8 +57,9 @@ function App() {
 
   // Add User
   const handleAddRecord = () => {
-    setUserData({ name: "", age: "", profession: "" });
-    setIsModalOpen(true);
+    // setUserData({ name: "", age: "", profession: "" });
+    // setIsModalOpen(true);
+    getAllUsers();
   };
 
   // Handle Data
