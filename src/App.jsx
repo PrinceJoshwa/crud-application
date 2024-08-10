@@ -10,13 +10,13 @@ function App() {
 
   const getAllUsers = async () => {
     try {
-      console.log("before api call")
-      const res = await axios.get(`https://crud-application-backend-five.vercel.app/users`);
+      console.log("before api call", import.meta.env.VITE_API_URL);
+      const res = await axios.get(`${import.meta.env.VITE_API_URL}/users`);
       console.log("Fetched users:", res.data);
       setUsers(res.data);
       setFilterusers(res.data);
     } catch (error) {
-      console.error("Error fetching users:", error.response ? error.response.data : error.message);
+      console.log("Error fetching users:", error.message);
     }
   };
 
@@ -57,9 +57,8 @@ function App() {
 
   // Add User
   const handleAddRecord = () => {
-    // setUserData({ name: "", age: "", profession: "" });
-    // setIsModalOpen(true);
-    getAllUsers();
+    setUserData({ name: "", age: "", profession: "" });
+    setIsModalOpen(true);
   };
 
   // Handle Data
