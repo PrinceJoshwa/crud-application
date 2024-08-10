@@ -10,7 +10,6 @@ function App() {
 
   const getAllUsers = async () => {
     try {
-      console.log("before api call", import.meta.env.VITE_API_URL);
       const res = await axios.get(`${import.meta.env.VITE_API_URL}/users`);
       console.log("Fetched users:", res.data);
       setUsers(res.data);
@@ -39,7 +38,7 @@ function App() {
     const isConfirmed = window.confirm("Are you sure you want to delete this user?");
     if (isConfirmed) {
       try {
-        const res = await axios.delete(`${process.env.REACT_APP_API_URL}/users/${id}`);
+        const res = await axios.delete(`${import.meta.env.VITE_API_URL}/users/${id}`);
         console.log("Delete response:", res.data);
         setUsers(res.data);
         setFilterusers(res.data);
@@ -71,9 +70,9 @@ function App() {
     e.preventDefault();
     try {
       if (userData.id) {
-        await axios.patch(`${process.env.REACT_APP_API_URL}/users/${userData.id}`, userData);
+        await axios.patch(`${import.meta.env.VITE_API_URL}/users/${userData.id}`, userData);
       } else {
-        await axios.post(`${process.env.REACT_APP_API_URL}/users`, userData);
+        await axios.post(`${import.meta.env.VITE_API_URL}/users`, userData);
       }
       closeModal();
       setUserData({ name: "", age: "", profession: "" });
